@@ -8,14 +8,46 @@
 import UIKit
 
 class SwipingController : UICollectionViewController,UICollectionViewDelegateFlowLayout {
-    
-    let bottomContainer: BottomCell = {
-        let view = BottomCell()
-        return view
-    }()
-    
+   
     private let reuseIdentifier = "Cell"
     
+    let previousBotton : UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("PREV", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.addTarget(self, action: #selector(handlePreviousButton), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func handlePreviousButton() {
+        print("Previous button pressed BC")
+    }
+    
+    lazy var pageControl : UIPageControl = {
+        let pc = UIPageControl()
+        pc.currentPage = 0
+        pc.numberOfPages = 4
+        pc.currentPageIndicatorTintColor = .white
+        pc.pageIndicatorTintColor = .black
+        return pc
+    }()
+    
+    let nextButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("NEXT", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.addTarget(self, action: #selector(handleNextButton), for: .touchUpInside)
+
+        return button
+    }()
+    @objc func handleNextButton() {
+        print("Next Botton Pressed")
+    }
+
+//    MARK: - ViewDidLoad
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,20 +57,29 @@ class SwipingController : UICollectionViewController,UICollectionViewDelegateFlo
         collectionView.isPagingEnabled = true
 
     }
+    
     func registerColectionView() {
         self.collectionView.register(PageCell.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
-    
+//    MARK: - Configure Buttons
     
     func configureBottomControllers() {
-        view.addSubview(bottomContainer)
-        bottomContainer.translatesAutoresizingMaskIntoConstraints = false
-        bottomContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        bottomContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        bottomContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        bottomContainer.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1).isActive = true
+        let bottomControlStackView = UIStackView(arrangedSubviews: [previousBotton,pageControl,nextButton])
+        view.addSubview(bottomControlStackView)
         
+        bottomControlStackView.translatesAutoresizingMaskIntoConstraints = false
+        bottomControlStackView.distribution = .fillEqually
+        bottomControlStackView.axis = .horizontal
+        bottomControlStackView.backgroundColor = .systemGray
+        
+        NSLayoutConstraint.activate([
+            bottomControlStackView.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor),
+            bottomControlStackView.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor),
+            bottomControlStackView.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor),
+            bottomControlStackView.heightAnchor.constraint(equalTo: collectionView.heightAnchor, multiplier: 0.1)
+        ])
     }
+//    MARK: - Collection View
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         
@@ -56,8 +97,6 @@ class SwipingController : UICollectionViewController,UICollectionViewDelegateFlo
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         
-//        cell.backgroundColor = .blue
-    
         return cell
     }
     
@@ -68,3 +107,9 @@ class SwipingController : UICollectionViewController,UICollectionViewDelegateFlo
     
     
 }
+
+
+
+//https://www.youtube.com/watch?v=WCECFfelSHk e3
+// https://www.youtube.com/watch?v=TK0mxO469ok e6
+// https://www.youtube.com/watch?v=1UQ-Y1-FNMQ e7

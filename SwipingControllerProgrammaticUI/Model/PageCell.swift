@@ -66,15 +66,6 @@ class PageCell : UICollectionViewCell {
         lableView.centerYAnchor.constraint(equalTo: centerContainerView.centerYAnchor).isActive = true
         lableView.widthAnchor.constraint(equalTo: centerContainerView.widthAnchor, multiplier: 0.9).isActive = true
         lableView.heightAnchor.constraint(equalTo: centerContainerView.heightAnchor, multiplier: 0.9).isActive = true
-        
-//        let bottomContainerView = UIView()
-//        addSubview(bottomContainerView)
-//        bottomContainerView.translatesAutoresizingMaskIntoConstraints = false
-//        bottomContainerView.topAnchor.constraint(equalTo: centerContainerView.bottomAnchor).isActive = true
-//        bottomContainerView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-//        bottomContainerView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-//        bottomContainerView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.1).isActive = true
-//        bottomContainerView.backgroundColor = .red
 
     }
     
